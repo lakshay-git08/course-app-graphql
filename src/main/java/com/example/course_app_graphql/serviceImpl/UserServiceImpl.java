@@ -1,7 +1,6 @@
 package com.example.course_app_graphql.serviceImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,11 +40,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(String id, UserInput userInput) {
 
-        Optional<User> userFromDB = userRepository.findById(id);
+        User userFromDB = userRepository.findById(id).orElse(null);
+
         if (userFromDB != null) {
-            
+
+            if (userInput.getName() != null) {
+                userFromDB.setName(userInput.getName());
+            }
+
+            if (userInput.getPhone() != 0) {
+                userFromDB.setPhone(userInput.getPhone());
+            }
+
+            if (userInput.getEmail() != null) {
+                userFromDB.setEmail(userInput.getEmail());
+            }
+            if (userInput.getUsername() != null) {
+                userFromDB.setUsername(userInput.getUsername());
+            }
         }
-        return null;
+        User updatedUser = userRepository.save(userFromDB);
+        return updatedUser;
+
     }
 
 }

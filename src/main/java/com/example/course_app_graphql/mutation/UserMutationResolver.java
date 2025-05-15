@@ -21,4 +21,9 @@ public class UserMutationResolver implements GraphQLMutationResolver {
         return userService.createUser(userInput);
     }
 
+    @MutationMapping
+    public User updateUser(String id, UserInput userInput) {
+        return userService.createUser(userInput);
+    }
+
 }

@@ -1,7 +1,9 @@
 type Query {
-    getAllUsers: [User]
+  getAllUsers: [User]
 }
 
 type Mutation {
-    createUser(input: UserInput): User 
+  createUser(input: UserInput): User
+  updateUser(id: ID, input: UserInput): User
 }
+
