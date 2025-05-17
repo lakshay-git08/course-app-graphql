@@ -1,6 +1,7 @@
 type User {
   id: ID!
   name: String!
+  email: String
 }
 
 input UserInput {
@@ -9,4 +10,14 @@ input UserInput {
   roleType: Int!
   username: String!
   password: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+}
+
+input UserFilter {
+  page: Int
+  limit: Int
 }

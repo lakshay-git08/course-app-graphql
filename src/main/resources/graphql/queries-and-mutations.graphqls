@@ -1,9 +1,12 @@
 type Query {
-  getAllUsers: [User]
+  getAllUsers(filter: UserFilter): [User]
+  getUserById(id: ID!): User
 }
 
 type Mutation {
-  createUser(input: UserInput): User
-  updateUser(id: ID, input: UserInput): User
+  createUser(input: UserInput!): User
+  updateUser(id: ID!, input: UpdateUserInput!): User
+  deleteUser(id: ID!): String
 }
 
+# '!' shows that the given field is required

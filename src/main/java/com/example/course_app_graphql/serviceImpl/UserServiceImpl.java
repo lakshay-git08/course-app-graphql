@@ -3,24 +3,46 @@ package com.example.course_app_graphql.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.course_app_graphql.entity.User;
+import com.example.course_app_graphql.input.UserFilter;
 import com.example.course_app_graphql.input.UserInput;
 import com.example.course_app_graphql.repository.UserRepository;
 import com.example.course_app_graphql.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(UserFilter filter) {
 
-        return userRepository.findAll();
+        if (filter != null) {
+            filter.print();
+        }
+        Sort sort = Sort.unsorted();
+        if (!filter.getSortBy().equals("")) {
+            Sort.Direction direction = filter.sortOrder == 1 ? Sort.Direction.ASC
+                    : filter.sortOrder == -1 ? Sort.Direction.DESC : null;
+            sort = direction == null ? Sort.unsorted() : Sort.by(direction, filter.sortBy);
+        }
 
+        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getLimit(), sort);
+        return userRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -61,7 +83,16 @@ public class UserServiceImpl implements UserService {
         }
         User updatedUser = userRepository.save(userFromDB);
         return updatedUser;
+    }
 
+    @Override
+    public String deleteUser(String id) {
+        User userFromDB = userRepository.findById(id).orElse(null);
+        if (userFromDB != null) {
+            userRepository.deleteById(id);
+            return "User deleted successfully.";
+        }
+        return "User not deleted.";
     }
 
 }

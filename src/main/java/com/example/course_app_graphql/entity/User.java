@@ -1,7 +1,7 @@
 package com.example.course_app_graphql.entity;
 
 import java.util.Date;
-import java.util.UUID;
+
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
     private String name;
 

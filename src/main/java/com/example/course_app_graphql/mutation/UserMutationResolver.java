@@ -1,6 +1,7 @@
 package com.example.course_app_graphql.mutation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
@@ -17,13 +18,21 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     UserService userService;
 
     @MutationMapping
-    public User createUser(UserInput userInput) {
+    public User createUser(@Argument UserInput input) {
+        return userService.createUser(input);
+    }
+
+    @MutationMapping
+    public User updateUser(@Argument String id, @Argument(name = "input") UserInput userInput) {
         return userService.createUser(userInput);
     }
 
     @MutationMapping
-    public User updateUser(String id, UserInput userInput) {
-        return userService.createUser(userInput);
+    public void deleteUser(@Argument String id) {
+        userService.deleteUser(id);
     }
 
 }
+
+// @Argument binds the parameter with graphql mapping. It should match with the
+// field in the mutation.graphqls
