@@ -1,5 +1,8 @@
 package com.example.course_app_graphql.input;
 
+import com.example.course_app_graphql.enums.UserSortBy;
+import com.example.course_app_graphql.enums.UserSortOrder;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,15 +10,31 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class UserFilter {
 
-    public int page = 1;
+    private int page = 1;
 
-    public int limit = 5;
+    private int limit = 5;
 
-    public String sortBy = "name";
+    private UserSortBy sortBy;
 
-    public int sortOrder = 1;
+    private UserSortOrder sortOrder;
+    // getSortOrder() return UserSortOrder
+
+    // getter
+
+    // public int getPage() {
+    // return this.page;
+    // }
+
+    // setter
+
+    // public void setPage(int page) {
+    // this.page = page;
+    // }
 
     public void print() {
         log.info("UserFilter: page = {}, limit = {}", this.page, this.limit);
     }
 }
+
+// sequence
+// sortBy and sortOrder > limit > page

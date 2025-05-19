@@ -25,19 +25,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(UserFilter filter) {
-
         if (filter != null) {
             filter.print();
-        }
-        Sort sort = Sort.unsorted();
-        if (!filter.getSortBy().equals("")) {
-            Sort.Direction direction = filter.sortOrder == 1 ? Sort.Direction.ASC
-                    : filter.sortOrder == -1 ? Sort.Direction.DESC : null;
-            sort = direction == null ? Sort.unsorted() : Sort.by(direction, filter.sortBy);
-        }
+            Sort sort = Sort.unsorted();
+            if (filter != null && !filter.getSortBy().equals("")) {
+                Sort.Direction direction = filter.getSortOrder().getValue() == 1 ? Sort.Direction.ASC
+                        : filter.getSortOrder().getValue() == -1 ? Sort.Direction.DESC : null;
+                sort = direction == null ? Sort.unsorted() : Sort.by(direction, filter.getSortBy().getValue());
+            }
 
-        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getLimit(), sort);
-        return userRepository.findAll(pageable).getContent();
+            Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getLimit(), sort);
+            return userRepository.findAll(pageable).getContent();
+        }
+        return userRepository.findAll();
     }
 
     @Override

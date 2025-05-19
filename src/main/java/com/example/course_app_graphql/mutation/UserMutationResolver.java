@@ -28,8 +28,8 @@ public class UserMutationResolver implements GraphQLMutationResolver {
     }
 
     @MutationMapping
-    public void deleteUser(@Argument String id) {
-        userService.deleteUser(id);
+    public String deleteUser(@Argument String id) {
+        return userService.deleteUser(id);
     }
 
 }

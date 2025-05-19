@@ -28,5 +28,4 @@ public class UserQueryResolver implements GraphQLQueryResolver {
     public User getUserById(@Argument String id) {
         return userService.getUserById(id);
     }
-
 }

@@ -1,7 +1,7 @@
 type User {
   id: ID!
   name: String!
-  email: String
+  email: String!
 }
 
 input UserInput {
@@ -20,4 +20,15 @@ input UpdateUserInput {
 input UserFilter {
   page: Int
   limit: Int
+  sortBy: UserSortBy
+  sortOrder: UserSortOrder
+}
+
+enum UserSortBy {
+  EMAIL
+  NAME
+}
+enum UserSortOrder {
+  ASC
+  DESC
 }
