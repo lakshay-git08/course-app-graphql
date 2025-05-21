@@ -1,13 +1,13 @@
 package com.example.course_app_graphql.enums;
 
-public enum UserSortBy {
+public enum CourseSortBy {
 
-    EMAIL("email"),
+    CATEGORY("category"),
     NAME("name");
 
     private final String sortBy;
 
-    UserSortBy(String sortBy) {
+    CourseSortBy(String sortBy) {
         this.sortBy = sortBy;
     }
 
@@ -15,10 +15,10 @@ public enum UserSortBy {
         return sortBy;
     }
 
-    public UserSortBy fromValue(String sortBy) {
-        for (UserSortBy userSortBy : values()) {
-            if (userSortBy.sortBy.equalsIgnoreCase(sortBy)) {
-                return userSortBy;
+    public CourseSortBy fromValue(String sortBy) {
+        for (CourseSortBy courseSortBy : values()) {
+            if (courseSortBy.sortBy.equalsIgnoreCase(sortBy)) {
+                return courseSortBy;
             }
         }
         throw new IllegalArgumentException("Unknown SortBy: " + sortBy);
